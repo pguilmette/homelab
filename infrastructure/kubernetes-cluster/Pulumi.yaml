@@ -2,3 +2,6 @@ name: kubernetes-cluster
 description: Kubernetes cluster infrastructure (K8s)
 runtime:
   name: nodejs
+config:
+  ciliumVersion: "1.17.0-rc.0"
+  cni: cilium
