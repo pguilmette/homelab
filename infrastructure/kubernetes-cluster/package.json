@@ -1,0 +1,12 @@
+{
+  "name": "kubernetes-cluster",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "16.18.54"
+  },
+  "dependencies": {
+    "@pguilmettenmedia/pulumi-kind": "0.0.5",
+    "@pulumi/kubernetes": "4.19.0",
+    "@pulumi/pulumi": "3.144.1"
+  }
+}
