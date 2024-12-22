@@ -1,6 +1,4 @@
 config:
-  kubernetes-cluster:environment: local-debug
-  kubernetes-cluster:name: homelab
   kubernetes-cluster:nodeImage: kindest/node:v1.32.0
   kubernetes-cluster:nodes:
     - role: control-plane
