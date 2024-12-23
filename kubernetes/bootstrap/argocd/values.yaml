@@ -1,9 +1,6 @@
 configs:
   cm:
-    # Needed because we use Helm within Kustomize
-    kustomize.buildOptions: --enable-helm
-    # Needed because we have paths to Helm values.yaml in parent directories that need to be referenced sometimes
-    kustomize.buildOptions: --load-restrictor LoadRestrictionsNone
+    kustomize.buildOptions: --enable-helm --load-restrictor LoadRestrictionsNone
 server:
   ingress:
     enabled: false
