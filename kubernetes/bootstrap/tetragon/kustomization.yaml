@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-system
+
+helmCharts:
+- name: tetragon
+  releaseName: tetragon
+  namespace: kube-system
+  repo: https://helm.cilium.io
+  version: 1.3.0
