@@ -1,5 +1,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as k8s from "@pulumi/kubernetes";
+//import * as talos from "@pulumiverse/talos";
 
 const stackConfig = new pulumi.Config();
 
@@ -9,23 +10,46 @@ export async function talosCluster() {
   const clusterName = `${name}-${environment}`;
 
   // TODO: setup Talos OS
+  /*const config = talos.client.getConfigurationOutput({
+    clusterName: "example-cluster",
+    clientConfiguration: thisSecrets.clientConfiguration,
+    nodes: ["10.5.0.2"],
+  });
+
+  const schematicResource = new talos.imagefactory.Schematic("schematicResource", {schematic: "string"});
+
+  const bootstrapResource = new talos.machine.Bootstrap("bootstrapResource", {
+    clientConfiguration: {
+      caCertificate: "string",
+      clientCertificate: "string",
+      clientKey: "string",
+    },
+    node: "string",
+    endpoint: "string",
+    timeouts: {
+      create: "string",
+    },
+  });
+
+  const kubeconfigResource = new talos.cluster.Kubeconfig("kubeconfigResource", {
+    clientConfiguration: {
+      caCertificate: "string",
+      clientCertificate: "string",
+      clientKey: "string",
+    },
+    node: "string",
+    certificateRenewalDuration: "string",
+    endpoint: "string",
+    timeouts: {
+      create: "string",
+      update: "string",
+    },
+  });*/
 
   // TODO: setup Cilium on the cluster
   const k8sProvider = new k8s.Provider("kubernetes-provider", {
     kubeconfig: ""//cluster.kubeconfig, TODO: get kubeconfig from Talos
   });
 
-  const baseCiliumChartPath = "../../kubernetes/bootstrap/cilium";
-  new k8s.helm.v4.Chart("cilium", {
-    chart: baseCiliumChartPath,
-    valueYamlFiles: [
-      new pulumi.asset.FileAsset(`${baseCiliumChartPath}/values.yaml`),
-      new pulumi.asset.FileAsset(`${baseCiliumChartPath}/values-talos.yaml`)
-    ]
-  }, {
-    provider: k8sProvider,
-    ignoreChanges: ["*"] // Ignore all changes because Cilium is handled by ArgoCD later on in the bootstrapping process
-  });
-
-  return { kubeconfig: "" /* TODO: get kubeconfig from Talos */ };
+  return { k8sProvider };
 }

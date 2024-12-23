@@ -24,23 +24,17 @@ export async function kindCluster() {
         serviceSubnet: stackConfig.get("serviceSubnet"),
       }
     }
+  }, {
+    customTimeouts: {
+      create: "30m",
+      delete: "30m",
+      update: "30m"
+    }
   });
 
   const k8sProvider = new k8s.Provider("kubernetes-provider", {
     kubeconfig: cluster.kubeconfig,
   });
 
-  const baseCiliumChartPath = "../../kubernetes/bootstrap/cilium";
-  new k8s.helm.v4.Chart("cilium", {
-    chart: baseCiliumChartPath,
-    valueYamlFiles: [
-      new pulumi.asset.FileAsset(`${baseCiliumChartPath}/values.yaml`),
-      new pulumi.asset.FileAsset(`${baseCiliumChartPath}/values-kind.yaml`)
-    ]
-  }, {
-    provider: k8sProvider,
-    ignoreChanges: ["*"] // Ignore all changes because Cilium is handled by ArgoCD later on in the bootstrapping process
-  });
-
-  return { kubeconfig: cluster.kubeconfig };
+  return { k8sProvider };
 }

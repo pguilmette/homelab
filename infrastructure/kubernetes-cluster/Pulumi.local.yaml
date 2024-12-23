@@ -1,4 +1,5 @@
 config:
+  kubernetes-cluster:bootstrapDirectory: ../../kubernetes/clusters/environments/local
   kubernetes-cluster:nodeImage: kindest/node:v1.32.0
   kubernetes-cluster:nodes:
     - role: control-plane

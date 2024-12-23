@@ -1,8 +1,0 @@
-apiVersion: v2
-name: cilium
-namespace: kube-system
-version: 1.0.0
-dependencies:
-  - name: cilium
-    repository: https://helm.cilium.io/
-    version: 1.17.0-rc.0

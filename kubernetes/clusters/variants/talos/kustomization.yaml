@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+# Cilium must be installed so ArgoCD can be installed otherwise nodes will never be ready to accept pods
+- ../../../bootstrap/cilium/variants/talos
+- ../base
+- ../../../bootstrap/argocd/variants/talos
+- argocd-bootstrap-applicationset.yaml
