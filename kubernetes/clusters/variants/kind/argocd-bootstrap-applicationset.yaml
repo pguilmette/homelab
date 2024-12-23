@@ -33,16 +33,16 @@ spec:
         namespace: tetragon
   template:
     metadata:
-      name: "{{appName}}"
+      name: "{{.appName}}"
     spec:
       project: default
       source:
         repoURL: https://github.com/pguilmette/homelab.git
         targetRevision: main
-        path: "kubernetes/bootstrap/{{appName}}/{{relativePath}}"
+        path: "kubernetes/bootstrap/{{.appName}}/{{.relativePath}}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "kube-{{appName}}"
+        namespace: "kube-{{.appName}}"
       syncPolicy:
         automated:
           prune: true
