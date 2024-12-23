@@ -1,4 +1,5 @@
 import * as pulumi from "@pulumi/pulumi";
+import * as k8s from "@pulumi/kubernetes";
 import { KubernetesProvider } from "./types/KubernetesProvider";
 import { KubernetesCni } from "./types/KubernetesCni";
 import { kindCluster } from "./modules/kindCluster";
@@ -14,15 +15,23 @@ export = async () => {
     throw new Error("Unsupported CNI.");
   }
 
+  let k8sProvider: k8s.Provider;
+
   if (provider === KubernetesProvider.Talos) {
-    const { kubeconfig } = await talosCluster();
+    k8sProvider = (await talosCluster()).k8sProvider;
   } else if (provider === KubernetesProvider.Kind) {
-    const { kubeconfig } = await kindCluster();
+    k8sProvider = (await kindCluster()).k8sProvider;
   } else {
     throw new Error("Unsupported provider.");
   }
-  
-  // TODO: setup ArgoCD on the cluster (will be installed again to manage itself later on in the bootstrap process)
+
+  new k8s.kustomize.v2.Directory("bootstrap", {
+    directory: stackConfig.require("bootstrapDirectory"),
+    skipAwait: true
+  }, {
+    provider: k8sProvider,
+    ignoreChanges: ["*"] // Ignore all changes because ArgoCD handles the syncs later on in the bootstrapping process
+  });
 
   return { };
 }

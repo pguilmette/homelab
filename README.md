@@ -15,6 +15,6 @@ To locally start a Kubernetes cluster using KinD (Kubernetes-in-Docker), you can
 2. Ensure you have Docker installed and running
 3. In a console, go to the `infrastructure/kubernetes-cluster` directory
 4. Log in to Pulumi locally: `pulumi login --local`
-5. Create the cluster: `pulumi up --stack kind.local --yes`
+5. Create the cluster: `pulumi up --stack local --yes`
 > You will be asked for a passphrase to protect your infrastructure secrets. You can put anything you want.
 6. Be patient 😊

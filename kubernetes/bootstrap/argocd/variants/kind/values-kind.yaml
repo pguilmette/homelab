@@ -1,0 +1,11 @@
+configs:
+  cm:
+    # We allow admin role on anonymous user because KinD is used as a local development environment
+    admin.enabled: true
+    users.anonymous.enabled: "true"
+    url: https://localhost:8080
+  rbac:
+    # Admin for everyone only in local (KinD)
+    policy.default: role:admin
+  params:
+    server.insecure: "true"

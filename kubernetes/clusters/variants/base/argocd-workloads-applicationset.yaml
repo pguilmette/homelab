@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: workloads-applicationset
+spec:
+  goTemplate: true
+  generators:
+  - git:
+      repoURL: https://github.com/pguilmette/homelab.git
+      revision: main
+      files:
+      - path: kubernetes/workloads/**/values.yaml
+  template:
+    metadata:
+      name: "{{.path.basenameNormalized}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/pguilmette/homelab.git
+        targetRevision: main
+        path: "{{.path.path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "wl-{{.path.basenameNormalized}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+          allowEmpty: false
+        syncOptions:
+          - Validate=true
+          - CreateNamespace=true
+          - PrunePropagationPolicy=foreground
+          - PruneLast=true
+          - RespectIgnoreDifferences=true
+        retry:
+          limit: -1
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 15m

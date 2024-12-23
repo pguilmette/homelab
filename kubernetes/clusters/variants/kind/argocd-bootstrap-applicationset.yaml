@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: bootstrap-applicationset
+spec:
+  goTemplate: true
+  generators:
+  - list:
+      elements:
+      - appName: argocd
+        namespace: argocd
+        relativePath: variants/kind
+      - appName: argocd-extended
+        namespace: argocd
+      - appName: cert-manager
+        namespace: cert-manager
+      - appName: cilium
+        namespace: kube-system
+        relativePath: variants/kind
+      - appName: external-dns
+        namespace: external-dns
+      - appName: external-secrets
+        namespace: external-secrets
+      - appName: gateway
+        namespace: gateway
+      - appName: kyverno
+        namespace: kyverno
+      - appName: metrics-server
+        namespace: metrics-server
+      - appName: node-feature-discovery
+        namespace: node-feature-discovery
+      - appName: tetragon
+        namespace: tetragon
+  template:
+    metadata:
+      name: "{{appName}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/pguilmette/homelab.git
+        targetRevision: main
+        path: "kubernetes/bootstrap/{{appName}}/{{relativePath}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "kube-{{appName}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+          allowEmpty: false
+        syncOptions:
+          - Validate=true
+          - CreateNamespace=true
+          - PrunePropagationPolicy=foreground
+          - PruneLast=true
+          - RespectIgnoreDifferences=true
+        retry:
+          limit: -1
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 15m
