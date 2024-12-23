@@ -1,3 +1,7 @@
+configs:
+  cm:
+    # Needed because we use Helm within Kustomize
+    kustomize.buildOptions: --enable-helm
 server:
   ingress:
     enabled: false
