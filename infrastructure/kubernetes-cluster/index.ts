@@ -30,7 +30,7 @@ export = async () => {
     skipAwait: true
   }, {
     provider: k8sProvider,
-    ignoreChanges: ["*"] // Ignore all changes because ArgoCD handles the syncs later on in the bootstrapping process
+    deletedWith: k8sProvider // There's no point in waiting for the manifests to be deleted if we're deleting the cluster
   });
 
   return { };
