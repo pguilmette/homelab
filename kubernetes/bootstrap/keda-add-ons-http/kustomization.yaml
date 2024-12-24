@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: keda-add-ons-http
+
+helmCharts:
+- name: keda-add-ons-http
+  releaseName: keda-add-ons-http
+  namespace: keda-add-ons-http
+  repo: https://kedacore.github.io/charts
+  version: 0.6.0
+  includeCRDs: true

@@ -17,16 +17,23 @@ spec:
       - appName: cilium
         namespace: kube-system
         relativePath: variants/talos
+      - appName: eraser
+        namespace: eraser
       - appName: external-dns
         namespace: external-dns
       - appName: external-secrets
         namespace: external-secrets
       - appName: gateway
         namespace: gateway
+      - appName: keda
+        namespace: keda
+      - appName: keda-add-ons-http
+        namespace: keda-add-ons-http
       - appName: kyverno
         namespace: kyverno
       - appName: metrics-server
         namespace: metrics-server
+        relativePath: variants/kind
       - appName: node-feature-discovery
         namespace: node-feature-discovery
       - appName: tetragon
