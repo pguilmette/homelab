@@ -27,6 +27,7 @@ spec:
         namespace: kyverno
       - appName: metrics-server
         namespace: metrics-server
+        relativePath: variants/kind
       - appName: node-feature-discovery
         namespace: node-feature-discovery
       - appName: tetragon
