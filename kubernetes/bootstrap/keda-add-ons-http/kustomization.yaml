@@ -7,5 +7,5 @@ helmCharts:
   releaseName: keda-add-ons-http
   namespace: keda-add-ons-http
   repo: https://kedacore.github.io/charts
-  version: 0.6.0
+  version: 0.8.0
   includeCRDs: true
