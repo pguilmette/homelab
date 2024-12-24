@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keda
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/pguilmette/homelab.git
+    targetRevision: main
+    path: "kubernetes/bootstrap/keda"         
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: keda
+  ignoreDifferences:
+  - group: admissionregistration.k8s.io
+    kind: ValidatingWebhookConfiguration
+    name: keda-admission
+    jqPathExpressions:
+      - .webhooks[]?.namespaceSelector
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Validate=true
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - ServerSideApply=true
+    retry:
+      limit: -1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 15m
+    managedNamespaceMetadata:
+      labels:
+        guilmette.dev/bootstrap-component: "true"

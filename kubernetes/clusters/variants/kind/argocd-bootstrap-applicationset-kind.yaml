@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: bootstrap-applicationset
+  name: bootstrap-applicationset-kind
 spec:
   goTemplate: true
   generators:
@@ -9,35 +9,13 @@ spec:
       elements:
       - appName: argocd
         namespace: argocd
-        relativePath: variants/talos
-      - appName: argocd-extended
-        namespace: argocd
-      - appName: cert-manager
-        namespace: cert-manager
+        relativePath: variants/kind
       - appName: cilium
         namespace: kube-system
-        relativePath: variants/talos
-      - appName: eraser
-        namespace: eraser
-      - appName: external-dns
-        namespace: external-dns
-      - appName: external-secrets
-        namespace: external-secrets
-      - appName: gateway
-        namespace: gateway
-      - appName: keda
-        namespace: keda
-      - appName: keda-add-ons-http
-        namespace: keda-add-ons-http
-      - appName: kyverno
-        namespace: kyverno
+        relativePath: variants/kind
       - appName: metrics-server
         namespace: metrics-server
         relativePath: variants/kind
-      - appName: node-feature-discovery
-        namespace: node-feature-discovery
-      - appName: tetragon
-        namespace: tetragon
   template:
     metadata:
       name: "{{.appName}}"
@@ -49,7 +27,7 @@ spec:
         path: "kubernetes/bootstrap/{{.appName}}{{ if .relativePath }}/{{.relativePath}}{{ end }}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "kube-{{.appName}}"
+        namespace: "{{.appName}}"
       syncPolicy:
         automated:
           prune: true
@@ -60,7 +38,6 @@ spec:
           - CreateNamespace=true
           - PrunePropagationPolicy=foreground
           - PruneLast=true
-          - RespectIgnoreDifferences=true
         retry:
           limit: -1
           backoff:

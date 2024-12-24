@@ -7,16 +7,8 @@ spec:
   generators:
   - list:
       elements:
-      - appName: argocd
-        namespace: argocd
-        relativePath: variants/kind
       - appName: argocd-extended
         namespace: argocd
-      - appName: cert-manager
-        namespace: cert-manager
-      - appName: cilium
-        namespace: kube-system
-        relativePath: variants/kind
       - appName: eraser
         namespace: eraser
       - appName: external-dns
@@ -25,15 +17,6 @@ spec:
         namespace: external-secrets
       - appName: gateway
         namespace: gateway
-      - appName: keda
-        namespace: keda
-      - appName: keda-add-ons-http
-        namespace: keda-add-ons-http
-      - appName: kyverno
-        namespace: kyverno
-      - appName: metrics-server
-        namespace: metrics-server
-        relativePath: variants/kind
       - appName: node-feature-discovery
         namespace: node-feature-discovery
       - appName: tetragon
@@ -60,7 +43,6 @@ spec:
           - CreateNamespace=true
           - PrunePropagationPolicy=foreground
           - PruneLast=true
-          - RespectIgnoreDifferences=true
         retry:
           limit: -1
           backoff:

@@ -1,0 +1,13 @@
+tetragon:
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      labelsOverride:
+        release: prometheus-stack
+tetragonOperator:
+  prometheus:
+    serviceMonitor:
+      enabled: true
+      labelsOverride:
+        release: prometheus-stack

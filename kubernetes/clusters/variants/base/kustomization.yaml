@@ -3,4 +3,10 @@ kind: Kustomization
 namespace: argocd
 
 resources:
+- argocd-bootstrap-application-argocd.yaml
+- argocd-bootstrap-application-cert-manager.yaml
+- argocd-bootstrap-application-keda.yaml
+- argocd-bootstrap-application-keda-http-add-on.yaml
+- argocd-bootstrap-application-kyverno.yaml
+- argocd-bootstrap-applicationset.yaml
 - argocd-workloads-applicationset.yaml
