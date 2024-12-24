@@ -25,7 +25,7 @@ spec:
         namespace: external-secrets
       - appName: gateway
         namespace: gateway
-            - appName: keda
+      - appName: keda
         namespace: keda
       - appName: keda-add-ons-http
         namespace: keda-add-ons-http
