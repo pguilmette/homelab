@@ -1,0 +1,25 @@
+keda:
+  http:
+    timeout: 30000
+  prometheus:
+    operator:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        additionalLabels:
+          release: prometheus-stack
+    webhooks:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        additionalLabels:
+          release: prometheus-stack
+    metricServer:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        additionalLabels:
+          release: prometheus-stack
+  networkPolicy:
+    enabled: true
+    flavor: "cilium"

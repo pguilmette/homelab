@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keda-http-add-on
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/pguilmette/homelab.git
+    targetRevision: main
+    path: "kubernetes/bootstrap/keda-http-add-on"         
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: keda-http-add-on
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Validate=true
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - ServerSideApply=true
+    retry:
+      limit: -1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 15m
+    managedNamespaceMetadata:
+      labels:
+        guilmette.dev/bootstrap-component: "true"

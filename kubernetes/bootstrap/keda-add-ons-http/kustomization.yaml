@@ -9,3 +9,4 @@ helmCharts:
   repo: https://kedacore.github.io/charts
   version: 0.8.0
   includeCRDs: true
+  valuesFile: values.yaml
