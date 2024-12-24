@@ -8,3 +8,4 @@ helmCharts:
   namespace: external-secrets
   repo: https://charts.external-secrets.io/
   version: 0.9.11
+  includeCRDs: true
