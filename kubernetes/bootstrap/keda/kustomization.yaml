@@ -7,5 +7,5 @@ helmCharts:
   releaseName: keda
   namespace: keda
   repo: https://kedacore.github.io/charts
-  version: 2.12.1
+  version: 2.16.0
   includeCRDs: true
