@@ -7,6 +7,7 @@ helmCharts:
   namespace: kube-system
   repo: https://helm.cilium.io/
   version: 1.17.0-rc.0
+  includeCRDs: true
   valuesFile: ../../values.yaml
   additionalValuesFiles:
   - values-kind.yaml

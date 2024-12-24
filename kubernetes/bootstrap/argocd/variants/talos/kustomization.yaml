@@ -11,6 +11,7 @@ helmCharts:
   namespace: argocd
   repo: https://argoproj.github.io/argo-helm
   version: 7.7.11
+  includeCRDs: true
   valuesFile: ../../values.yaml
   additionalValuesFiles:
   - values-talos.yaml
