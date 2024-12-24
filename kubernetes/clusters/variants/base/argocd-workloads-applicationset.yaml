@@ -21,7 +21,7 @@ spec:
         path: "{{.path.path}}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "wl-{{.path.basenameNormalized}}"
+        namespace: "{{.path.basenameNormalized}}"
       syncPolicy:
         automated:
           prune: true
@@ -39,3 +39,6 @@ spec:
             duration: 5s
             factor: 2
             maxDuration: 15m
+        managedNamespaceMetadata:
+          labels:
+            guilmette.dev/workload-component: "true"

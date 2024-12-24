@@ -42,7 +42,7 @@ spec:
         path: "kubernetes/bootstrap/{{.appName}}{{ if .relativePath }}/{{.relativePath}}{{ end }}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "kube-{{.appName}}"
+        namespace: "{{.appName}}"
       syncPolicy:
         automated:
           prune: true
@@ -60,3 +60,6 @@ spec:
             duration: 5s
             factor: 2
             maxDuration: 15m
+        managedNamespaceMetadata:
+          labels:
+            guilmette.dev/bootstrap-component: "true"
