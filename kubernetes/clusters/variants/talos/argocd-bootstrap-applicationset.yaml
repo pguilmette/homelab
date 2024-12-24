@@ -39,7 +39,7 @@ spec:
       source:
         repoURL: https://github.com/pguilmette/homelab.git
         targetRevision: main
-        path: "kubernetes/bootstrap/{{.appName}}/{{.relativePath}}"
+        path: "kubernetes/bootstrap/{{.appName}}{{ if .relativePath }}/{{.relativePath}}{{ end }}"
       destination:
         server: https://kubernetes.default.svc
         namespace: "kube-{{.appName}}"
