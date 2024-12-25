@@ -5,5 +5,4 @@ config:
     - role: control-plane
     - role: worker
     - role: worker
-    - role: worker
   kubernetes-cluster:provider: kind

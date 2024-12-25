@@ -1,0 +1,92 @@
+kubeProxy:
+  enabled: false
+
+crds:
+  enabled: true
+alertmanager:
+  alertmanagerSpec:
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: default
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 100Gi
+          persistentVolumeReclaimPolicy: Retain
+
+kube-state-metrics:
+  selfMonitor:
+    enabled: true
+  prometheus:
+    monitor:
+      enabled: true
+  metricLabelsAllowlist:
+  - "persistentvolumeclaims=[*]"
+  prometheus:
+    monitor:
+      enabled: true
+      relabelings:
+      - action: replace
+        regex: (.*)
+        replacement: $1
+        targetLabel: kubernetes_node
+        sourceLabels:
+        - __meta_kubernetes_pod_node_name
+
+grafana:
+  enabled: true
+  ingress:
+    enabled: false
+
+kubelet:
+  enabled: true
+  serviceMonitor:
+    metricRelabelings:
+    - action: replace
+      sourceLabels:
+      - node
+      targetLabel: instance
+
+nodeExporter:
+  serviceMonitor:
+    relabelings:
+    - action: replace
+      regex: (.*)
+      replacement: $1
+      sourceLabels:
+      - __meta_kubernetes_pod_node_name
+      targetLabel: kubernetes_node
+
+prometheus:
+  prometheusSpec:
+    retention: 90d
+    retentionSize: "50GB"
+    walCompression: true
+    resources:
+      requests:
+        memory: 500Mi
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: default
+          resources:
+            requests:
+              storage: 100Gi
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    probeSelectorNilUsesHelmValues: false
+  networkPolicy:
+    enabled: true
+    flavor: cilium
+
+prometheusOperator:
+  networkPolicy:
+    enabled: true
+    flavor: cilium
+  admissionWebhooks:
+    certManager:
+      enabled: true
+    patch:
+      enabled: false
