@@ -9,6 +9,10 @@ spec:
       elements:
       - appName: argocd-extended
         namespace: argocd
+      - appName: cloudnative-pg
+        namespace: cloudnative-pg
+      - appName: crossplane
+        namespace: crossplane
       - appName: eraser
         namespace: eraser
       - appName: external-dns
@@ -19,6 +23,12 @@ spec:
         namespace: gateway
       - appName: node-feature-discovery
         namespace: node-feature-discovery
+      - appName: prometheus-stack
+        namespace: prometheus-stack
+      - appName: pulumi
+        namespace: pulumi
+      - appName: reloader
+        namespace: reloader
       - appName: tetragon
         namespace: tetragon
   template:
@@ -29,7 +39,7 @@ spec:
       source:
         repoURL: https://github.com/pguilmette/homelab.git
         targetRevision: main
-        path: "kubernetes/bootstrap/{{.appName}}{{ if .relativePath }}/{{.relativePath}}{{ end }}"
+        path: "kubernetes/bootstrap/{{.appName}}"
       destination:
         server: https://kubernetes.default.svc
         namespace: "{{.appName}}"
